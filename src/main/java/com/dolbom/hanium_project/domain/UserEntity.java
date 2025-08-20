@@ -9,29 +9,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users") // DB 테이블 이름을 'users'로 지정
+@Table(name = "users")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA는 기본 생성자를 필요로 합니다.
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // MySQL의 AUTO_INCREMENT 사용
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false, unique = true) // null 불가, 중복 불가
+    // --- phoneNumber 필드를 email 위로 이동 ---
+    @Column(nullable = false)
+    private String phoneNumber;
+    // -----------------------------------------
+
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    // 한 명의 User가 여러 명의 Patient를 가질 수 있음 (1:N 관계)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PatientEntity> patients = new ArrayList<>();
 
-    // 생성자
-    public UserEntity(String email, String password) {
+    // --- 생성자 파라미터 순서도 변경 ---
+    public UserEntity(String phoneNumber, String email, String password) {
+        this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
     }
+    // ------------------------------------
 }

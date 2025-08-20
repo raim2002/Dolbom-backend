@@ -39,7 +39,7 @@ public class AuthService {
         String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
 
         // 3. User 엔티티 생성
-        UserEntity userEntity = new UserEntity(requestDto.getEmail(), encodedPassword);
+        UserEntity userEntity = new UserEntity(requestDto.getPhoneNumber(),requestDto.getEmail(),encodedPassword);
 
         // 4. Patient 엔티티 생성
         PatientEntity patientEntity = PatientEntity.builder()

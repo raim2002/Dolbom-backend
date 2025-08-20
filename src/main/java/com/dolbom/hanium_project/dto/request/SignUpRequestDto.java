@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public class SignUpRequestDto {
 
-    // 보호자(User) 정보
+    // 보호자(User) 정보 (순서 변경)
+    private String phoneNumber;
     private String email;
     private String password;
 
